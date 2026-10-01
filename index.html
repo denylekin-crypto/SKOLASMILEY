@@ -148,18 +148,16 @@
     </style>
 </head>
 
-<body class="font-sans min-h-screen overflow-x-hidden">
+<body class="font-sans min-h-screen overflow-x-hidden pb-20">
 
-    <!-- TOP NOTICE -->
-    <div class="bg-smiley-yellow text-smiley-navy py-2.5 px-4 text-sm font-bold flex items-center justify-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-        <span>Upis u nove grupe je u toku</span>
-        <span class="hidden sm:inline opacity-60">•</span>
-        <span class="hidden sm:inline">Besplatna provera nivoa znanja</span>
+    <!-- URGENT BANNER -->
+    <div class="bg-smiley-yellow text-smiley-navy font-bold text-center py-2 px-4 text-sm shadow-md sticky top-0 z-50 flex items-center justify-center gap-2 border-b-2 border-slate-900/10">
+        <i class="fa-solid fa-bullhorn animate-pulse text-red-600"></i>
+        <span>OBAVEŠTENJE: PRIJAVE ZA NEMAČKI A1 - JOŠ 3 MESTA!</span>
     </div>
 
     <!-- NAVIGATION -->
-    <header class="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-slate-200/70">
+    <header class="bg-white/85 backdrop-blur-xl border-b border-slate-200/70">
         <nav class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
             <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="flex items-center gap-3">
                 <span class="w-11 h-11 rounded-2xl bg-smiley-yellow flex items-center justify-center shadow-sm">
@@ -284,7 +282,7 @@
     <div class="bg-smiley-navy text-white py-4 marquee">
         <div class="gap-10 text-sm md:text-base font-bold">
             <span>ENGLISH 🇬🇧</span><span>•</span><span>DEUTSCH 🇩🇪</span><span>•</span>
-            <span>CONVERSATION 🗣️</span><span>•</span><span>LANGUAGE SKILLS ✨</span><span>•</span>
+            <span>CONVERSATION 🗣️️</span><span>•</span><span>LANGUAGE SKILLS ✨</span><span>•</span>
             <span>ENGLISH 🇬🇧</span><span>•</span><span>DEUTSCH 🇩🇪</span><span>•</span>
             <span>CONVERSATION 🗣️</span><span>•</span><span>LANGUAGE SKILLS ✨</span><span>•</span>
         </div>
@@ -594,279 +592,6 @@
     </div>
 
     <script>
-tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                    colors: {
-                        smiley: {
-                            navy: '#0f172a',
-                            yellow: '#fde047',
-                            yellow_hover: '#facc15',
-                            white: '#ffffff',
-                            viber: '#7360f2' // Zvanična Viber boja
-                        }
-                    },
-                    animation: {
-                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        body {
-            background-color: #f8fafc;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        /* Custom radio styles */
-        .quiz-option input:checked + div {
-            background-color: #fde047;
-            border-color: #0f172a;
-            color: #0f172a;
-            font-weight: 600;
-        }
-
-        /* Scratch Card styles */
-        .scratch-container {
-            position: relative;
-            width: 300px;
-            height: 150px;
-            margin: 0 auto;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            user-select: none;
-            touch-action: none; /* Sprečava skrolovanje prilikom grebanja na mobilnom */
-        }
-        
-        #scratch-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            cursor: crosshair;
-        }
-
-        .scratch-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
-            z-index: 1;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        /* FAQ Accordion Transition */
-        .faq-content {
-            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-        .faq-content.open {
-            max-height: 200px;
-            opacity: 1;
-        }
-        .faq-icon {
-            transition: transform 0.3s ease;
-        }
-        .faq-icon.open {
-            transform: rotate(180deg);
-        }
-    </style>
-</head>
-<body class="text-slate-800 font-sans flex flex-col min-h-screen pb-20">
-
-    <!-- URGENT BANNER -->
-    <div class="bg-smiley-yellow text-smiley-navy font-bold text-center py-2 px-4 text-sm shadow-md sticky top-0 z-50 flex items-center justify-center gap-2 border-b-2 border-slate-900/10">
-        <i class="fa-solid fa-bullhorn animate-pulse-fast text-red-600"></i>
-        <span>OBAVEŠTENJE: PRIJAVE ZA NEMAČKI A1 - JOŠ 3 MESTA!</span>
-    </div>
-
-    <!-- HEADER -->
-    <header class="bg-smiley-navy text-white text-center pt-10 pb-16 px-4 rounded-b-[2.5rem] shadow-xl relative">
-        <div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
-            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-lg">
-                <i class="fa-regular fa-face-smile-beam text-4xl text-smiley-navy"></i>
-            </div>
-            <h1 class="text-3xl font-extrabold mb-2 tracking-tight">Smiley School</h1>
-            <p class="text-slate-300 font-light max-w-sm">
-                Proverite svoje znanje u 3 koraka i osvojite nagradu za upis!
-            </p>
-        </div>
-    </header>
-
-    <!-- MAIN CONTENT -->
-    <main class="flex-grow px-4 -mt-8 relative z-20">
-        <div class="max-w-md mx-auto bg-white rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.15)] overflow-hidden border border-slate-100 min-h-[400px] flex flex-col">
-            
-            <!-- STEP 1: Odabir Jezika -->
-            <div id="step-1-language" class="p-8 text-center flex-1 flex flex-col justify-center">
-                <h2 class="text-2xl font-bold text-smiley-navy mb-6">Koji jezik želite da učite?</h2>
-                <div class="space-y-4">
-                    <button onclick="selectLanguage('english')" class="w-full bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 p-4 rounded-2xl flex items-center gap-4 transition-all active:scale-95">
-                        <span class="text-3xl">🇬🇧</span>
-                        <span class="font-bold text-lg text-slate-700">Engleski jezik</span>
-                        <i class="fa-solid fa-chevron-right ml-auto text-slate-400"></i>
-                    </button>
-                    <button onclick="selectLanguage('german')" class="w-full bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 p-4 rounded-2xl flex items-center gap-4 transition-all active:scale-95">
-                        <span class="text-3xl">🇩🇪</span>
-                        <span class="font-bold text-lg text-slate-700">Nemački jezik</span>
-                        <i class="fa-solid fa-chevron-right ml-auto text-slate-400"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- STEP 2: Pitanja -->
-            <div id="step-2-quiz" class="hidden p-6 flex-1 flex flex-col justify-center">
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-full" id="quiz-lang-label">ENGLESKI</span>
-                    <span class="text-sm font-semibold text-smiley-navy">Pitanje <span id="current-q-num">1</span>/3</span>
-                </div>
-                
-                <h3 id="question-text" class="text-xl font-bold text-slate-800 mb-6">
-                    <!-- Text pitanja -->
-                </h3>
-
-                <div id="options-container" class="space-y-3 mb-8">
-                    <!-- Opcije -->
-                </div>
-
-                <button id="next-btn" onclick="nextQuestion()" disabled class="w-full bg-slate-200 text-slate-400 font-bold text-lg py-4 rounded-xl transition-colors cursor-not-allowed mt-auto">
-                    Sledeće
-                </button>
-            </div>
-
-            <!-- STEP 3: Rezultat i Greb-Greb -->
-            <div id="step-3-result" class="hidden p-6 text-center flex-1 flex flex-col justify-center items-center">
-                <h2 class="text-2xl font-bold text-smiley-navy mb-2">Tvoj nivo je procenjen kao:</h2>
-                <div class="text-3xl font-extrabold text-smiley-navy bg-smiley-yellow inline-block px-6 py-2 rounded-2xl mb-6 shadow-sm border-2 border-smiley-navy" id="calculated-level">
-                    A1
-                </div>
-                
-                <p class="text-slate-600 text-sm mb-4 font-medium">Ogrebi karticu ispod i proveri šta si osvojio/la!</p>
-
-                <!-- Scratch Card Container -->
-                <div class="scratch-container" id="scratch-wrapper">
-                    <!-- Ono sto je ispod (nagrada) -->
-                    <div class="scratch-content">
-                        <i class="fa-solid fa-gift text-2xl text-smiley-navy mb-1"></i>
-                        <h3 class="text-2xl font-extrabold text-smiley-navy leading-tight">15% POPUSTA</h3>
-                        <p class="text-xs font-bold text-slate-800 uppercase mt-1">Na prvi mesec!</p>
-                    </div>
-                    <!-- Canvas koji se grebe -->
-                    <canvas id="scratch-canvas"></canvas>
-                </div>
-
-                <!-- Forma za preuzimanje (skrivena dok se ne ogrebe) -->
-                <div id="claim-form-container" class="hidden w-full mt-6 animate-[fade-in_0.5s_ease-out]">
-                    <p class="text-sm text-green-600 font-bold mb-3"><i class="fa-solid fa-circle-check"></i> Čestitamo! Ostavite podatke da sačuvamo popust.</p>
-                    <form id="leadForm" class="space-y-3 text-left">
-                        <input type="text" id="userName" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-smiley-yellow focus:border-smiley-yellow outline-none text-sm font-medium" placeholder="Ime i prezime">
-                        <input type="tel" id="userPhone" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-smiley-yellow focus:border-smiley-yellow outline-none text-sm font-medium" placeholder="Broj telefona">
-                        <button type="submit" class="w-full bg-smiley-navy text-white font-bold py-3.5 rounded-xl shadow-md hover:bg-slate-800 transition-colors flex justify-center items-center gap-2">
-                            Preuzmi popust <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-        <!-- FAQ SECTION -->
-        <div class="max-w-md mx-auto mt-10 mb-8">
-            <h3 class="text-center font-bold text-slate-400 uppercase tracking-widest text-sm mb-4">Najčešća pitanja</h3>
-            
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 divide-y divide-slate-100 overflow-hidden">
-                <!-- FAQ Item 1 -->
-                <div>
-                    <button class="w-full text-left px-5 py-4 font-semibold text-smiley-navy flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                        Kada se održavaju časovi?
-                        <i class="fa-solid fa-chevron-down text-slate-400 faq-icon text-sm"></i>
-                    </button>
-                    <div class="faq-content px-5 text-sm text-slate-600">
-                        <div class="pb-4">Prilagođavamo se polaznicima! Termini su uglavnom u poslepodnevnim i večernjim časovima kako bi odgovarali đacima i zaposlenima.</div>
-                    </div>
-                </div>
-                <!-- FAQ Item 2 -->
-                <div>
-                    <button class="w-full text-left px-5 py-4 font-semibold text-smiley-navy flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                        Da li je moguće plaćanje na rate?
-                        <i class="fa-solid fa-chevron-down text-slate-400 faq-icon text-sm"></i>
-                    </button>
-                    <div class="faq-content px-5 text-sm text-slate-600">
-                        <div class="pb-4">Naravno. Plaćanje se vrši na mesečnom nivou na početku svakog meseca za tekući period.</div>
-                    </div>
-                </div>
-                <!-- FAQ Item 3 -->
-                <div>
-                    <button class="w-full text-left px-5 py-4 font-semibold text-smiley-navy flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                        Gde se nalazite?
-                        <i class="fa-solid fa-chevron-down text-slate-400 faq-icon text-sm"></i>
-                    </button>
-                    <div class="faq-content px-5 text-sm text-slate-600">
-                        <div class="pb-4">Nalazimo se u Despotovcu. Za tačnu adresu i instrukcije, slobodno nas pozovite ili pišite na Viber!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- FLOATING KONTAKT DUGMIĆI -->
-    <div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
-        <!-- POZIV -->
-        <a href="tel:+381637473367" class="group relative w-14 h-14 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(59,130,246,0.5)] hover:scale-110 transition-transform" aria-label="Pozovite nas">
-            <i class="fa-solid fa-phone text-2xl"></i>
-            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                Pozovi
-            </span>
-        </a>
-        <!-- WHATSAPP -->
-        <a href="https://wa.me/381637473367" target="_blank" rel="noopener noreferrer" class="group relative w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform" aria-label="WhatsApp">
-            <i class="fa-brands fa-whatsapp text-3xl"></i>
-            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                WhatsApp
-            </span>
-        </a>
-        <!-- VIBER -->
-        <a href="viber://chat?number=+381637473367" class="group relative w-14 h-14 bg-[#7360f2] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(115,96,242,0.5)] hover:scale-110 transition-transform" aria-label="Viber">
-            <i class="fa-brands fa-viber text-3xl"></i>
-            <span class="absolute top-0 right-0 flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-white"></span>
-            </span>
-            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                Viber
-            </span>
-        </a>
-    </div>
-
-    <!-- SUCCESS MODAL (prikazuje se umesto alert() funkcije) -->
-    <div id="customAlert" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/70 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 px-4">
-        <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl">
-            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
-                <i class="fa-solid fa-check text-4xl text-green-500"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-smiley-navy mb-2">Uspešno!</h3>
-            <p class="text-slate-600 mb-6" id="alertMessage">Podaci su sačuvani.</p>
-            <button onclick="closeAlert()" class="w-full bg-smiley-navy text-white font-bold py-3 rounded-xl">Zatvori</button>
-        </div>
-    </div>
-
-    <script>
         // --- QUIZ DATA ---
         const quizData = {
             english: [
@@ -967,11 +692,9 @@ tailwind.config = {
             step2.classList.add('hidden');
             step3.classList.remove('hidden');
             
-            // Logika nivoa: 0-1 (A1), 2-3 (A2)
             let level = score >= 2 ? "A2 (Početni viši)" : "A1 (Početni)";
             document.getElementById('calculated-level').innerText = level;
             
-            // Inicijalizuj canvas tek kad postane vidljiv (zbog tačnih dimenzija)
             setTimeout(initScratchCard, 100);
         }
 
@@ -981,32 +704,27 @@ tailwind.config = {
             const ctx = canvas.getContext('2d');
             const wrapper = document.getElementById('scratch-wrapper');
             
-            // Set canvas dimensions to match CSS
             canvas.width = wrapper.offsetWidth;
             canvas.height = wrapper.offsetHeight;
             
-            // Draw scratch cover (silver background with pattern)
-            ctx.fillStyle = '#94a3b8'; // slate-400
+            ctx.fillStyle = '#94a3b8'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Add some text on top
-            ctx.font = "bold 20px Poppins, sans-serif";
+            ctx.font = "bold 20px Manrope, sans-serif";
             ctx.fillStyle = "#ffffff";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText("OGREBI OVDE!", canvas.width / 2, canvas.height / 2);
             
-            // Setup for scratching
             ctx.globalCompositeOperation = 'destination-out';
             ctx.lineJoin = 'round';
             ctx.lineCap = 'round';
-            ctx.lineWidth = 25; // Debljina četkice
+            ctx.lineWidth = 25;
             
             let isDrawing = false;
             
             function getMousePos(e) {
                 const rect = canvas.getBoundingClientRect();
-                // Handle touch and mouse events
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
                 return {
@@ -1021,7 +739,7 @@ tailwind.config = {
                 const pos = getMousePos(e);
                 ctx.beginPath();
                 ctx.moveTo(pos.x, pos.y);
-                if(e.cancelable) e.preventDefault(); // Sprečava skrolovanje na mobilnom dok se grebe
+                if(e.cancelable) e.preventDefault();
             }
             
             function scratchMove(e) {
@@ -1037,7 +755,6 @@ tailwind.config = {
                 isDrawing = false;
             }
             
-            // Event Listeners
             canvas.addEventListener('mousedown', scratchStart);
             canvas.addEventListener('mousemove', scratchMove);
             canvas.addEventListener('mouseup', scratchEnd);
@@ -1047,13 +764,11 @@ tailwind.config = {
             canvas.addEventListener('touchmove', scratchMove, {passive: false});
             canvas.addEventListener('touchend', scratchEnd);
             
-            // Check how much is scratched
             function checkPercentage() {
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const pixels = imageData.data;
                 let transparentPixels = 0;
                 
-                // Proveravamo alpha kanal (svaki 4. element u nizu)
                 for (let i = 3; i < pixels.length; i += 4) {
                     if (pixels[i] === 0) {
                         transparentPixels++;
@@ -1063,16 +778,13 @@ tailwind.config = {
                 const totalPixels = canvas.width * canvas.height;
                 const percentage = (transparentPixels / totalPixels) * 100;
                 
-                // Ako je ogrebano vise od 45%, otkrij sve i prikazi formu
                 if (percentage > 45 && !isScratched) {
                     isScratched = true;
-                    // Animirano uklanjanje canvasa
                     canvas.style.transition = "opacity 0.5s ease-out";
                     canvas.style.opacity = "0";
                     
                     setTimeout(() => {
                         canvas.style.display = "none";
-                        // Prikazi formu
                         document.getElementById('claim-form-container').classList.remove('hidden');
                     }, 500);
                 }
@@ -1088,7 +800,6 @@ tailwind.config = {
                 content.classList.remove('open');
                 icon.classList.remove('open');
             } else {
-                // Zatvori ostale
                 document.querySelectorAll('.faq-content.open').forEach(el => {
                     el.classList.remove('open');
                     el.previousElementSibling.querySelector('.faq-icon').classList.remove('open');
@@ -1104,7 +815,6 @@ tailwind.config = {
             e.preventDefault();
             const ime = document.getElementById('userName').value;
             
-            // Prikaz prilagođenog "Alert" modala
             document.getElementById('alertMessage').innerText = `Hvala ${ime}! Tvoj popust od 15% je uspešno sačuvan. Pozvaćemo te uskoro!`;
             const customAlert = document.getElementById('customAlert');
             customAlert.classList.remove('hidden');
@@ -1112,7 +822,6 @@ tailwind.config = {
                 customAlert.classList.remove('opacity-0');
             }, 10);
             
-            // Reset forme (opciono)
             this.reset();
         });
 
@@ -1136,7 +845,6 @@ tailwind.config = {
             document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        // Progress bar enhancement for the new visual design.
         const originalLoadQuestion = loadQuestion;
         loadQuestion = function() {
             originalLoadQuestion();
