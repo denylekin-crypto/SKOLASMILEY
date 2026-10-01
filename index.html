@@ -3,19 +3,598 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smiley School - Proveri znanje i osvoji popust!</title>
-    
-    <!-- Tailwind CSS -->
+    <meta name="description" content="Smiley School – savremena škola stranih jezika. Engleski i nemački za decu i odrasle.">
+    <title>Smiley School | Nauči jezik. Govori slobodno.</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts: Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif']
+                    },
+                    colors: {
+                        smiley: {
+                            navy: '#101828',
+                            yellow: '#FFD84D',
+                            yellow2: '#FFEA9A',
+                            cream: '#FFF9E8',
+                            purple: '#6956E8',
+                            green: '#15B77A'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --navy:#101828;
+            --yellow:#FFD84D;
+            --cream:#FFF9E8;
+            --purple:#6956E8;
+        }
+        html { scroll-behavior:smooth; }
+        body {
+            background:#f7f8fb;
+            color:#101828;
+            -webkit-font-smoothing:antialiased;
+        }
+        .display { font-family:'Manrope',sans-serif; }
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(16,24,40,.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16,24,40,.045) 1px, transparent 1px);
+            background-size:34px 34px;
+        }
+        .hero-glow {
+            background:
+                radial-gradient(circle at 80% 25%, rgba(255,216,77,.35), transparent 30%),
+                radial-gradient(circle at 20% 0%, rgba(105,86,232,.10), transparent 28%);
+        }
+        .glass {
+            background:rgba(255,255,255,.78);
+            backdrop-filter:blur(16px);
+            -webkit-backdrop-filter:blur(16px);
+        }
+        .card-shadow {
+            box-shadow:0 24px 70px rgba(16,24,40,.10);
+        }
+        .soft-shadow {
+            box-shadow:0 12px 36px rgba(16,24,40,.08);
+        }
+        .float {
+            animation:float 5s ease-in-out infinite;
+        }
+        .float2 {
+            animation:float 6s ease-in-out 1s infinite;
+        }
+        @keyframes float {
+            0%,100% { transform:translateY(0) rotate(0deg); }
+            50% { transform:translateY(-10px) rotate(1deg); }
+        }
+        .fade-up {
+            animation:fadeUp .8s ease both;
+        }
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(18px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+        .quiz-option input:checked + div {
+            background:#FFD84D;
+            border-color:#101828;
+            color:#101828;
+            font-weight:700;
+            transform:translateY(-1px);
+        }
+        .scratch-container {
+            position:relative;
+            width:300px;
+            height:150px;
+            margin:0 auto;
+            border-radius:24px;
+            overflow:hidden;
+            box-shadow:0 16px 40px rgba(16,24,40,.14);
+            user-select:none;
+            touch-action:none;
+        }
+        #scratch-canvas {
+            position:absolute;
+            inset:0;
+            width:100%;
+            height:100%;
+            z-index:10;
+            cursor:crosshair;
+        }
+        .scratch-content {
+            position:absolute;
+            inset:0;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            background:linear-gradient(135deg,#FFD84D,#FFB800);
+            z-index:1;
+            padding:1rem;
+            text-align:center;
+        }
+        .faq-content {
+            transition:max-height .3s ease,opacity .3s ease;
+            max-height:0;
+            opacity:0;
+            overflow:hidden;
+        }
+        .faq-content.open { max-height:200px; opacity:1; }
+        .faq-icon { transition:transform .3s ease; }
+        .faq-icon.open { transform:rotate(180deg); }
+        .marquee {
+            white-space:nowrap;
+            overflow:hidden;
+        }
+        .marquee > div {
+            display:inline-flex;
+            animation:marquee 22s linear infinite;
+        }
+        @keyframes marquee {
+            from { transform:translateX(0); }
+            to { transform:translateX(-50%); }
+        }
+    </style>
+</head>
+
+<body class="font-sans min-h-screen overflow-x-hidden">
+
+    <!-- TOP NOTICE -->
+    <div class="bg-smiley-yellow text-smiley-navy py-2.5 px-4 text-sm font-bold flex items-center justify-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+        <span>Upis u nove grupe je u toku</span>
+        <span class="hidden sm:inline opacity-60">•</span>
+        <span class="hidden sm:inline">Besplatna provera nivoa znanja</span>
+    </div>
+
+    <!-- NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-slate-200/70">
+        <nav class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
+            <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="flex items-center gap-3">
+                <span class="w-11 h-11 rounded-2xl bg-smiley-yellow flex items-center justify-center shadow-sm">
+                    <i class="fa-regular fa-face-smile-beam text-2xl text-smiley-navy"></i>
+                </span>
+                <span class="text-left">
+                    <span class="block display font-extrabold text-lg leading-none">Smiley</span>
+                    <span class="block text-xs font-semibold text-slate-500 mt-1 tracking-wide">SCHOOL</span>
+                </span>
+            </button>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+                <button onclick="showPrograms()" class="hover:text-slate-950 transition">Programi</button>
+                <button onclick="scrollToQuiz()" class="hover:text-slate-950 transition">Proveri nivo</button>
+                <button onclick="document.getElementById('why-section').scrollIntoView({behavior:'smooth'})" class="hover:text-slate-950 transition">Zašto Smiley?</button>
+                <button onclick="showContact()" class="hover:text-slate-950 transition">Kontakt</button>
+            </div>
+
+            <button onclick="scrollToQuiz()" class="bg-smiley-navy text-white px-5 py-3 rounded-full font-bold text-sm hover:-translate-y-0.5 transition shadow-lg">
+                Proveri nivo <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="relative overflow-hidden hero-grid hero-glow">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-16 md:pt-24 pb-20 md:pb-28">
+            <div class="grid lg:grid-cols-[1.08fr_.92fr] gap-14 items-center">
+
+                <div class="fade-up">
+                    <div class="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 text-sm font-bold text-slate-700 soft-shadow mb-7">
+                        <span class="w-2.5 h-2.5 rounded-full bg-smiley-green"></span>
+                        Savremeno učenje jezika
+                    </div>
+
+                    <h1 class="display text-5xl sm:text-6xl lg:text-[76px] leading-[.96] font-extrabold tracking-[-.055em] max-w-4xl">
+                        Nauči jezik.<br>
+                        <span class="relative inline-block">
+                            Govori slobodno.
+                            <span class="absolute left-0 right-0 -bottom-1 h-2 bg-smiley-yellow rounded-full -z-0"></span>
+                        </span>
+                    </h1>
+
+                    <p class="mt-7 text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
+                        Engleski i nemački za decu i odrasle. Više razgovora, više prakse i časovi prilagođeni stvarnim ciljevima.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-3 mt-9">
+                        <button onclick="scrollToQuiz()" class="bg-smiley-navy text-white px-7 py-4 rounded-2xl font-bold text-base hover:-translate-y-1 transition shadow-xl">
+                            <i class="fa-solid fa-bolt mr-2 text-smiley-yellow"></i>
+                            Proveri svoj nivo
+                        </button>
+                        <button onclick="showPrograms()" class="bg-white border border-slate-200 px-7 py-4 rounded-2xl font-bold text-slate-800 hover:bg-slate-50 transition">
+                            Pogledaj programe
+                            <i class="fa-solid fa-arrow-down ml-2 text-slate-400"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-wrap gap-x-7 gap-y-3 mt-9 text-sm font-semibold text-slate-500">
+                        <span><i class="fa-solid fa-circle-check text-smiley-green mr-2"></i>Besplatna procena nivoa</span>
+                        <span><i class="fa-solid fa-circle-check text-smiley-green mr-2"></i>Engleski & nemački</span>
+                        <span><i class="fa-solid fa-circle-check text-smiley-green mr-2"></i>Deca & odrasli</span>
+                    </div>
+                </div>
+
+                <!-- HERO VISUAL -->
+                <div class="relative min-h-[450px] hidden md:block">
+                    <div class="absolute inset-8 rounded-[3rem] bg-smiley-cream border border-yellow-200/70 rotate-3"></div>
+                    <div class="absolute inset-4 rounded-[3rem] bg-white card-shadow -rotate-2 p-7">
+                        <div class="flex items-center justify-between mb-8">
+                            <span class="text-xs uppercase tracking-[.18em] font-bold text-slate-400">Today's lesson</span>
+                            <span class="px-3 py-1.5 rounded-full bg-green-50 text-green-700 text-xs font-bold">● Active</span>
+                        </div>
+
+                        <div class="rounded-3xl bg-smiley-navy p-7 text-white">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="text-sm text-slate-300 font-semibold">ENGLISH</div>
+                                    <div class="display text-3xl font-extrabold mt-2">Let's talk.</div>
+                                </div>
+                                <span class="w-12 h-12 bg-smiley-yellow rounded-2xl flex items-center justify-center text-smiley-navy">
+                                    <i class="fa-solid fa-microphone text-xl"></i>
+                                </span>
+                            </div>
+                            <div class="mt-8 h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full w-[72%] bg-smiley-yellow rounded-full"></div>
+                            </div>
+                            <div class="flex justify-between mt-3 text-xs text-slate-400">
+                                <span>Speaking practice</span><span>72%</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 mt-4">
+                            <div class="bg-slate-50 rounded-2xl p-4">
+                                <div class="text-2xl">🇬🇧</div>
+                                <div class="font-bold mt-2">English</div>
+                                <div class="text-xs text-slate-400 mt-1">A1 — C1</div>
+                            </div>
+                            <div class="bg-slate-50 rounded-2xl p-4">
+                                <div class="text-2xl">🇩🇪</div>
+                                <div class="font-bold mt-2">Deutsch</div>
+                                <div class="text-xs text-slate-400 mt-1">A1 — B2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="float absolute -top-2 right-0 bg-white rounded-2xl px-5 py-4 soft-shadow border border-slate-100">
+                        <div class="text-xs text-slate-400 font-bold uppercase">Your level</div>
+                        <div class="display text-2xl font-extrabold mt-1">A2 ✨</div>
+                    </div>
+
+                    <div class="float2 absolute -bottom-2 -left-3 bg-smiley-yellow rounded-2xl px-5 py-4 soft-shadow">
+                        <div class="text-xs font-bold text-slate-700">Speak more.</div>
+                        <div class="display text-xl font-extrabold">Fear less. 🚀</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="bg-smiley-navy text-white py-4 marquee">
+        <div class="gap-10 text-sm md:text-base font-bold">
+            <span>ENGLISH 🇬🇧</span><span>•</span><span>DEUTSCH 🇩🇪</span><span>•</span>
+            <span>CONVERSATION 🗣️</span><span>•</span><span>LANGUAGE SKILLS ✨</span><span>•</span>
+            <span>ENGLISH 🇬🇧</span><span>•</span><span>DEUTSCH 🇩🇪</span><span>•</span>
+            <span>CONVERSATION 🗣️</span><span>•</span><span>LANGUAGE SKILLS ✨</span><span>•</span>
+        </div>
+    </div>
+
+    <!-- WHY -->
+    <section id="why-section" class="max-w-7xl mx-auto px-5 lg:px-8 py-20 md:py-28">
+        <div class="max-w-2xl">
+            <span class="text-sm font-extrabold uppercase tracking-[.18em] text-smiley-purple">Zašto Smiley?</span>
+            <h2 class="display text-4xl md:text-5xl font-extrabold tracking-tight mt-3">Jezik se ne uči samo iz knjige.</h2>
+            <p class="text-slate-600 text-lg mt-5 leading-relaxed">Cilj je da ono što naučiš možeš da upotrebiš kada zaista zatreba.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+            <div class="bg-white rounded-[2rem] p-7 border border-slate-200/80 soft-shadow hover:-translate-y-1 transition">
+                <div class="w-12 h-12 rounded-2xl bg-yellow-100 flex items-center justify-center text-xl">🎯</div>
+                <h3 class="display font-extrabold text-xl mt-6">Fokus na cilj</h3>
+                <p class="text-slate-500 mt-3 leading-relaxed">Program koji prati nivo i potrebe polaznika.</p>
+            </div>
+            <div class="bg-white rounded-[2rem] p-7 border border-slate-200/80 soft-shadow hover:-translate-y-1 transition">
+                <div class="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center text-xl">🗣️</div>
+                <h3 class="display font-extrabold text-xl mt-6">Više razgovora</h3>
+                <p class="text-slate-500 mt-3 leading-relaxed">Praktična komunikacija i sigurnost u govoru.</p>
+            </div>
+            <div class="bg-white rounded-[2rem] p-7 border border-slate-200/80 soft-shadow hover:-translate-y-1 transition">
+                <div class="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-xl">📈</div>
+                <h3 class="display font-extrabold text-xl mt-6">Napredak</h3>
+                <p class="text-slate-500 mt-3 leading-relaxed">Jasan put od prvog časa do sledećeg nivoa.</p>
+            </div>
+            <div class="bg-white rounded-[2rem] p-7 border border-slate-200/80 soft-shadow hover:-translate-y-1 transition">
+                <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-xl">✨</div>
+                <h3 class="display font-extrabold text-xl mt-6">Prijatna atmosfera</h3>
+                <p class="text-slate-500 mt-3 leading-relaxed">Učenje bez pritiska, uz podršku i motivaciju.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAMS -->
+    <section id="programs-section" class="bg-white border-y border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8 py-20 md:py-28">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-5">
+                <div>
+                    <span class="text-sm font-extrabold uppercase tracking-[.18em] text-smiley-purple">Programi</span>
+                    <h2 class="display text-4xl md:text-5xl font-extrabold tracking-tight mt-3">Pronađi svoj jezik.</h2>
+                </div>
+                <p class="max-w-md text-slate-500">Od prvih reči do sigurnog razgovora — izaberi program koji ti odgovara.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-5 mt-12">
+                <div class="group rounded-[2.5rem] bg-smiley-navy text-white p-7 md:p-10 relative overflow-hidden">
+                    <div class="absolute -right-14 -top-14 w-48 h-48 rounded-full bg-smiley-yellow/15"></div>
+                    <div class="relative">
+                        <div class="flex justify-between items-start">
+                            <div class="text-5xl">🇬🇧</div>
+                            <span class="px-3 py-1.5 bg-white/10 rounded-full text-xs font-bold">A1 — C1</span>
+                        </div>
+                        <h3 class="display text-3xl font-extrabold mt-12">Engleski jezik</h3>
+                        <p class="text-slate-300 mt-3 max-w-md">Za decu, tinejdžere i odrasle. Fokus na razumevanju, govoru i praktičnoj upotrebi jezika.</p>
+                        <button onclick="selectLanguage('english'); scrollToQuiz();" class="mt-8 bg-smiley-yellow text-smiley-navy px-5 py-3 rounded-xl font-extrabold hover:scale-[1.02] transition">
+                            Proveri nivo <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="group rounded-[2.5rem] bg-smiley-cream p-7 md:p-10 relative overflow-hidden border border-yellow-200">
+                    <div class="absolute -right-14 -top-14 w-48 h-48 rounded-full bg-smiley-yellow/40"></div>
+                    <div class="relative">
+                        <div class="flex justify-between items-start">
+                            <div class="text-5xl">🇩🇪</div>
+                            <span class="px-3 py-1.5 bg-white/70 rounded-full text-xs font-bold">A1 — B2</span>
+                        </div>
+                        <h3 class="display text-3xl font-extrabold mt-12">Nemački jezik</h3>
+                        <p class="text-slate-600 mt-3 max-w-md">Program za početnike i one koji žele da unaprede znanje za školu, posao ili svakodnevni život.</p>
+                        <button onclick="selectLanguage('german'); scrollToQuiz();" class="mt-8 bg-smiley-navy text-white px-5 py-3 rounded-xl font-extrabold hover:scale-[1.02] transition">
+                            Proveri nivo <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="max-w-7xl mx-auto px-5 lg:px-8 py-20 md:py-28">
+        <div class="text-center max-w-2xl mx-auto">
+            <span class="text-sm font-extrabold uppercase tracking-[.18em] text-smiley-purple">Jednostavno</span>
+            <h2 class="display text-4xl md:text-5xl font-extrabold tracking-tight mt-3">Tvoj put do novog jezika.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-5 mt-14">
+            <div class="relative">
+                <div class="text-6xl display font-extrabold text-slate-100">01</div>
+                <h3 class="display text-xl font-extrabold -mt-3">Upoznajemo nivo</h3>
+                <p class="text-slate-500 mt-2">Proverimo gde si trenutno.</p>
+            </div>
+            <div class="relative">
+                <div class="text-6xl display font-extrabold text-slate-100">02</div>
+                <h3 class="display text-xl font-extrabold -mt-3">Postavljamo cilj</h3>
+                <p class="text-slate-500 mt-2">Znamo šta želiš da postigneš.</p>
+            </div>
+            <div class="relative">
+                <div class="text-6xl display font-extrabold text-slate-100">03</div>
+                <h3 class="display text-xl font-extrabold -mt-3">Vežbamo</h3>
+                <p class="text-slate-500 mt-2">Znanje pretvaramo u komunikaciju.</p>
+            </div>
+            <div class="relative">
+                <div class="text-6xl display font-extrabold text-slate-100">04</div>
+                <h3 class="display text-xl font-extrabold -mt-3">Napredujemo</h3>
+                <p class="text-slate-500 mt-2">Korak po korak do sledećeg nivoa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz-section" class="bg-smiley-navy py-20 md:py-28 scroll-mt-20">
+        <div class="max-w-4xl mx-auto px-5">
+            <div class="text-center text-white mb-10">
+                <span class="inline-flex items-center gap-2 text-sm font-extrabold uppercase tracking-[.18em] text-smiley-yellow">
+                    <span class="w-2 h-2 bg-smiley-yellow rounded-full"></span>
+                    Besplatna procena
+                </span>
+                <h2 class="display text-4xl md:text-5xl font-extrabold mt-4">Koliko dobro poznaješ jezik?</h2>
+                <p class="text-slate-300 mt-4">Odgovori na nekoliko pitanja i saznaj svoj okvirni nivo.</p>
+            </div>
+
+            <div class="max-w-xl mx-auto bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-white/10">
+                <!-- STEP 1 -->
+                <div id="step-1-language" class="p-8 md:p-10 text-center min-h-[400px] flex flex-col justify-center">
+                    <div class="w-14 h-14 rounded-2xl bg-yellow-100 flex items-center justify-center mx-auto mb-5 text-2xl">🧠</div>
+                    <h2 class="display text-2xl md:text-3xl font-extrabold mb-3">Izaberi jezik</h2>
+                    <p class="text-slate-500 mb-7">Test traje oko minut.</p>
+                    <div class="space-y-3">
+                        <button onclick="selectLanguage('english')" class="w-full bg-slate-50 hover:bg-yellow-50 border-2 border-slate-200 hover:border-smiley-yellow p-5 rounded-2xl flex items-center gap-4 transition-all active:scale-[.99]">
+                            <span class="text-3xl">🇬🇧</span>
+                            <span class="font-extrabold text-lg">Engleski jezik</span>
+                            <i class="fa-solid fa-arrow-right ml-auto text-slate-400"></i>
+                        </button>
+                        <button onclick="selectLanguage('german')" class="w-full bg-slate-50 hover:bg-yellow-50 border-2 border-slate-200 hover:border-smiley-yellow p-5 rounded-2xl flex items-center gap-4 transition-all active:scale-[.99]">
+                            <span class="text-3xl">🇩🇪</span>
+                            <span class="font-extrabold text-lg">Nemački jezik</span>
+                            <i class="fa-solid fa-arrow-right ml-auto text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2 -->
+                <div id="step-2-quiz" class="hidden p-7 md:p-9 min-h-[430px] flex flex-col justify-center">
+                    <div class="flex justify-between items-center mb-7">
+                        <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider bg-slate-100 px-3 py-1.5 rounded-full" id="quiz-lang-label">ENGLESKI</span>
+                        <span class="text-sm font-bold">Pitanje <span id="current-q-num">1</span>/3</span>
+                    </div>
+                    <div class="h-2 bg-slate-100 rounded-full mb-8 overflow-hidden">
+                        <div id="quiz-progress" class="h-full bg-smiley-yellow rounded-full transition-all" style="width:33%"></div>
+                    </div>
+                    <h3 id="question-text" class="display text-2xl font-extrabold text-slate-900 mb-7"></h3>
+                    <div id="options-container" class="space-y-3 mb-8"></div>
+                    <button id="next-btn" onclick="nextQuestion()" disabled class="w-full bg-slate-200 text-slate-400 font-bold text-lg py-4 rounded-2xl transition cursor-not-allowed mt-auto">
+                        Sledeće
+                    </button>
+                </div>
+
+                <!-- STEP 3 -->
+                <div id="step-3-result" class="hidden p-7 md:p-9 text-center min-h-[520px] flex flex-col justify-center items-center">
+                    <div class="w-14 h-14 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h2 class="display text-2xl font-extrabold mb-2">Tvoj okvirni nivo</h2>
+                    <div class="text-2xl md:text-3xl font-extrabold bg-smiley-yellow inline-block px-6 py-3 rounded-2xl mb-5 shadow-sm border-2 border-smiley-navy" id="calculated-level">A1</div>
+                    <p class="text-slate-500 text-sm mb-5 font-medium">Ogrebi karticu i proveri malu nagradu.</p>
+
+                    <div class="scratch-container" id="scratch-wrapper">
+                        <div class="scratch-content">
+                            <i class="fa-solid fa-gift text-2xl text-smiley-navy mb-1"></i>
+                            <h3 class="text-2xl font-extrabold text-smiley-navy">15% POPUSTA</h3>
+                            <p class="text-xs font-bold text-slate-800 uppercase mt-1">Na prvi mesec!</p>
+                        </div>
+                        <canvas id="scratch-canvas"></canvas>
+                    </div>
+
+                    <div id="claim-form-container" class="hidden w-full mt-6">
+                        <p class="text-sm text-green-600 font-bold mb-3"><i class="fa-solid fa-circle-check"></i> Čestitamo! Ostavite podatke da sačuvamo popust.</p>
+                        <form id="leadForm" class="space-y-3 text-left">
+                            <input type="text" id="userName" required class="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-smiley-yellow focus:border-smiley-yellow outline-none text-sm font-medium" placeholder="Ime i prezime">
+                            <input type="tel" id="userPhone" required class="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-smiley-yellow focus:border-smiley-yellow outline-none text-sm font-medium" placeholder="Broj telefona">
+                            <button type="submit" class="w-full bg-smiley-navy text-white font-bold py-3.5 rounded-xl shadow-md hover:bg-slate-800 transition flex justify-center items-center gap-2">
+                                Sačuvaj popust <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="max-w-3xl mx-auto px-5 py-20 md:py-28">
+        <div class="text-center mb-10">
+            <span class="text-sm font-extrabold uppercase tracking-[.18em] text-smiley-purple">FAQ</span>
+            <h2 class="display text-4xl font-extrabold mt-3">Česta pitanja</h2>
+        </div>
+
+        <div class="bg-white rounded-[2rem] border border-slate-200 divide-y divide-slate-100 overflow-hidden soft-shadow">
+            <div>
+                <button class="w-full text-left px-6 py-5 font-bold flex justify-between items-center" onclick="toggleFaq(this)">
+                    Kada se održavaju časovi?
+                    <i class="fa-solid fa-chevron-down text-slate-400 faq-icon text-sm"></i>
+                </button>
+                <div class="faq-content px-6 text-sm text-slate-600">
+                    <div class="pb-5">Prilagođavamo se polaznicima! Termini su uglavnom u poslepodnevnim i večernjim časovima kako bi odgovarali đacima i zaposlenima.</div>
+                </div>
+            </div>
+            <div>
+                <button class="w-full text-left px-6 py-5 font-bold flex justify-between items-center" onclick="toggleFaq(this)">
+                    Da li je moguće plaćanje na rate?
+                    <i class="fa-solid fa-chevron-down text-slate-400 faq-icon text-sm"></i>
+                </button>
+                <div class="faq-content px-6 text-sm text-slate-600">
+                    <div class="pb-5">Naravno. Plaćanje se vrši na mesečnom nivou na početku svakog meseca za tekući period.</div>
+                </div>
+            </div>
+            <div>
+                <button class="w-full text-left px-6 py-5 font-bold flex justify-between items-center" onclick="toggleFaq(this)">
+                    Gde se nalazite?
+                    <i class="fa-solid fa-chevron-down text-slate-400 faq-icon text-sm"></i>
+                </button>
+                <div class="faq-content px-6 text-sm text-slate-600">
+                    <div class="pb-5">Nalazimo se u Despotovcu. Za tačnu adresu i instrukcije, slobodno nas pozovite ili pišite na Viber!</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact-section" class="max-w-7xl mx-auto px-5 lg:px-8 pb-20 md:pb-28 scroll-mt-24">
+        <div class="rounded-[2.5rem] bg-smiley-yellow p-8 md:p-14 overflow-hidden relative">
+            <div class="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-white/20"></div>
+            <div class="relative grid md:grid-cols-[1fr_auto] gap-10 items-center">
+                <div>
+                    <span class="text-sm font-extrabold uppercase tracking-[.18em] text-slate-700">Sledeći korak</span>
+                    <h2 class="display text-4xl md:text-5xl font-extrabold tracking-tight mt-3">Spreman/na da počneš?</h2>
+                    <p class="text-slate-700 text-lg mt-4 max-w-xl">Proveri nivo znanja, izaberi program i napravi prvi korak.</p>
+                </div>
+                <button onclick="scrollToQuiz()" class="bg-smiley-navy text-white px-7 py-4 rounded-2xl font-bold shadow-xl hover:-translate-y-1 transition whitespace-nowrap">
+                    Proveri nivo <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-smiley-navy text-white">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8 py-10 flex flex-col md:flex-row justify-between gap-6 items-start md:items-center">
+            <div class="flex items-center gap-3">
+                <span class="w-10 h-10 rounded-xl bg-smiley-yellow flex items-center justify-center text-smiley-navy">
+                    <i class="fa-regular fa-face-smile-beam text-xl"></i>
+                </span>
+                <div>
+                    <div class="display font-extrabold">Smiley School</div>
+                    <div class="text-xs text-slate-400 mt-1">Škola stranih jezika</div>
+                </div>
+            </div>
+            <div class="text-sm text-slate-400">
+                Despotovac • Engleski • Nemački
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING KONTAKT DUGMIĆI -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
+        <!-- POZIV -->
+        <a href="tel:+381637473367" class="group relative w-14 h-14 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(59,130,246,0.5)] hover:scale-110 transition-transform" aria-label="Pozovite nas">
+            <i class="fa-solid fa-phone text-2xl"></i>
+            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                Pozovi
+            </span>
+        </a>
+        <!-- WHATSAPP -->
+        <a href="https://wa.me/381637473367" target="_blank" rel="noopener noreferrer" class="group relative w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp text-3xl"></i>
+            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                WhatsApp
+            </span>
+        </a>
+        <!-- VIBER -->
+        <a href="viber://chat?number=+381637473367" class="group relative w-14 h-14 bg-[#7360f2] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(115,96,242,0.5)] hover:scale-110 transition-transform" aria-label="Viber">
+            <i class="fa-brands fa-viber text-3xl"></i>
+            <span class="absolute top-0 right-0 flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-white"></span>
+            </span>
+            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                Viber
+            </span>
+        </a>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div id="customAlert" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/70 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 px-4">
+        <div class="bg-white rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                <i class="fa-solid fa-check text-4xl text-green-500"></i>
+            </div>
+            <h3 class="display text-2xl font-extrabold mb-2">Uspešno!</h3>
+            <p class="text-slate-600 mb-6" id="alertMessage">Podaci su sačuvani.</p>
+            <button onclick="closeAlert()" class="w-full bg-smiley-navy text-white font-bold py-3.5 rounded-xl">Zatvori</button>
+        </div>
+    </div>
+
+    <script>
+tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
@@ -246,15 +825,34 @@
         </div>
     </main>
 
-    <!-- FLOATING VIBER BUTTON -->
-    <a href="viber://chat?number=+381637473367" class="fixed bottom-6 right-6 w-14 h-14 bg-smiley-viber text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(115,96,242,0.5)] hover:scale-110 transition-transform z-50" aria-label="Kontaktirajte nas na Viber">
-        <i class="fa-brands fa-viber text-3xl"></i>
-        <!-- Ping dot -->
-        <span class="absolute top-0 right-0 flex h-3 w-3">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-smiley-viber"></span>
-        </span>
-    </a>
+    <!-- FLOATING KONTAKT DUGMIĆI -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
+        <!-- POZIV -->
+        <a href="tel:+381637473367" class="group relative w-14 h-14 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(59,130,246,0.5)] hover:scale-110 transition-transform" aria-label="Pozovite nas">
+            <i class="fa-solid fa-phone text-2xl"></i>
+            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                Pozovi
+            </span>
+        </a>
+        <!-- WHATSAPP -->
+        <a href="https://wa.me/381637473367" target="_blank" rel="noopener noreferrer" class="group relative w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp text-3xl"></i>
+            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                WhatsApp
+            </span>
+        </a>
+        <!-- VIBER -->
+        <a href="viber://chat?number=+381637473367" class="group relative w-14 h-14 bg-[#7360f2] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(115,96,242,0.5)] hover:scale-110 transition-transform" aria-label="Viber">
+            <i class="fa-brands fa-viber text-3xl"></i>
+            <span class="absolute top-0 right-0 flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-white"></span>
+            </span>
+            <span class="absolute right-16 bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                Viber
+            </span>
+        </a>
+    </div>
 
     <!-- SUCCESS MODAL (prikazuje se umesto alert() funkcije) -->
     <div id="customAlert" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/70 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 px-4">
@@ -525,6 +1123,26 @@
                 customAlert.classList.add('hidden');
             }, 300);
         }
+
+        function scrollToQuiz() {
+            document.getElementById('quiz-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function showPrograms() {
+            document.getElementById('programs-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function showContact() {
+            document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Progress bar enhancement for the new visual design.
+        const originalLoadQuestion = loadQuestion;
+        loadQuestion = function() {
+            originalLoadQuestion();
+            const progress = document.getElementById('quiz-progress');
+            if (progress) progress.style.width = ((currentQuestionIndex + 1) / 3 * 100) + '%';
+        };
     </script>
 </body>
 </html>
